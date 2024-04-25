@@ -11,7 +11,7 @@ class Driver {
     int quantum = 3;
     int Counter = 0;
     
-    public Scheduler(List<PCB> Q1, List<PCB> Q2) {
+    public Driver(List<PCB> Q1, List<PCB> Q2) {
         this.Q1 = Q1;
         this.Q2 = Q2;
 
@@ -19,7 +19,7 @@ class Driver {
         sortByArrivalTime(this.Q2);
     }
 
-    public void run() {
+    public void executeSchedulingAlgorithm() {
         PCB excutingProcess = null;
         List<PCB> rQ1 = new ArrayList<>();
         List<PCB> rQ2 = new ArrayList<>();
