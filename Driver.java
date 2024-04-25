@@ -20,7 +20,7 @@ class Driver {
     }
 
     public void run() {
-        PCB excProcess = null;
+        PCB excutingProcess = null;
         List<PCB> rQ1 = new ArrayList<>();
         List<PCB> rQ2 = new ArrayList<>();
 
@@ -53,7 +53,7 @@ class Driver {
                 sortByBurstTime(rQ2);
             }
 
-            if (excProcess == null) {
+            if (excutingProcess == null) {
                 PCB process = null;
                 if (!rQ1.isEmpty()) {
                     process = rQ1.remove(0);
@@ -62,28 +62,28 @@ class Driver {
                 }
 
                 if (process != null)
-                    excProcess = execute(process);
+                    excutingProcess = execute(process);
 
             } else {
-                if (excProcess.priority == 1 && !rQ1.isEmpty() && Counter == quantum) {
-                    rQ1.add(excProcess);
-                    excProcess = execute(rQ1.remove(0));
+                if (excutingProcess.priority == 1 && !rQ1.isEmpty() && Counter == quantum) {
+                    rQ1.add(excutingProcess);
+                    excutingProcess = execute(rQ1.remove(0));
 
-                } else if (excProcess.priority == 2 && !rQ1.isEmpty()) {
-                    rQ2.add(excProcess);
+                } else if (excutingProcess.priority == 2 && !rQ1.isEmpty()) {
+                    rQ2.add(excutingProcess);
                     sortByBurstTime(rQ2);
-                    excProcess = execute(rQ1.remove(0));
+                    excutingProcess = execute(rQ1.remove(0));
                 }
             }
 
             clockTime++;
 
-            if (excProcess != null) {
-                excProcess.exceutionTime++;
+            if (excutingProcess != null) {
+                excutingProcess.exceutionTime++;
                 Counter++;
-                if (excProcess.exceutionTime == excProcess.cpuBurst) {
-                    terminate(excProcess);
-                    excProcess = null;
+                if (excutingProcess.exceutionTime == excutingProcess.cpuBurst) {
+                    terminate(excutingProcess);
+                    excutingProcess = null;
                 }
             }
         }
@@ -124,7 +124,7 @@ class Driver {
         System.out.println("*******************");
         for (PCB process : array) {
             System.out.println(process);
-            System.out.println("_________________________________________________________________________________________"); 
+            System.out.println(""); 
             }
 
         System.out.println();
@@ -156,7 +156,7 @@ class Driver {
             pw.println("*******************");
             for (PCB process : array){
                 pw.println(process);
-                System.out.println("_________________________________________________________________________________________"); 
+                System.out.println(""); 
                  }
 
             pw.println();
