@@ -5,12 +5,12 @@ class Driver {
 
     private List<PCB> Q1;
     private List<PCB> Q2;
-    private String orderChart = "";
+    private String ordChart = "";
 
-    int clockTime = 0;
+    int clTime = 0;
     int quantum = 3;
     int Counter = 0;
-
+    
     public Scheduler(List<PCB> Q1, List<PCB> Q2) {
         this.Q1 = Q1;
         this.Q2 = Q2;
@@ -24,9 +24,9 @@ class Driver {
         List<PCB> rQ1 = new ArrayList<>();
         List<PCB> rQ2 = new ArrayList<>();
 
-        clockTime = 0;
+        clTime = 0;
         Counter = 0;
-        orderChart = "";
+        ordChart = "";
 
         for (PCB process : Q1) {
             process.exceutionTime = 0;
@@ -42,12 +42,12 @@ class Driver {
 
         while (!Q1.isEmpty() || !Q2.isEmpty() || !rQ1.isEmpty() || !rQ2.isEmpty() || excProcess != null) {
 
-            while (!Q1.isEmpty() && Q1.get(0).arrivalTime <= clockTime) {
+            while (!Q1.isEmpty() && Q1.get(0).arrivalTime <= clTime) {
                 PCB process = Q1.remove(0);
                 rQ1.add(process);
             }
 
-            while (!Q2.isEmpty() && Q2.get(0).arrivalTime <= clockTime) {
+            while (!Q2.isEmpty() && Q2.get(0).arrivalTime <= clTime) {
                 PCB process = Q2.remove(0);
                 rQ2.add(process);
                 sortByBurstTime(rQ2);
@@ -76,7 +76,7 @@ class Driver {
                 }
             }
 
-            clockTime++;
+            clTime++;
 
             if (excutingProcess != null) {
                 excutingProcess.exceutionTime++;
@@ -91,23 +91,23 @@ class Driver {
 
     private PCB execute(PCB process) {
         Counter = 0;
-        orderChart += process.id + " | ";
+        ordChart += process.id + " | ";
 
         if (process.exceutionTime == 0)
-            process.startTime = clockTime;
+            process.startTime = clTime;
 
         return process;
     }
 
     private void terminate(PCB process) {
-        process.terminationTime = clockTime;
+        process.terminationTime = clTime;
         process.waitingTime = process.terminationTime - process.arrivalTime - process.cpuBurst;
         process.responseTime = process.startTime - process.arrivalTime;
         process.turnAroundTime = process.terminationTime - process.arrivalTime;
     }
 
-    public String getOrderChart() {
-        return orderChart;
+    public String getOrdChart() {
+        return ordChart;
     }
 
     private void sortByBurstTime(List<PCB> array) {
@@ -119,7 +119,7 @@ class Driver {
     }
 
 
-    public static void print() {
+    public static void Display() {
         System.out.println("Processes Details:");
         System.out.println("*******************");
         for (PCB process : array) {
@@ -128,7 +128,7 @@ class Driver {
             }
 
         System.out.println();
-        System.out.println("Scheduling order chart: | " + scheduler.getOrderChart());
+        System.out.println("Scheduling order chart: | " + scheduler.getOrdChart());
         System.out.println();
 
         int size = array.size();
@@ -148,7 +148,7 @@ class Driver {
         System.out.println();
     }
 
-    public static void printFile() {
+    public static void WriteOnFile() {
         try {
             PrintWriter pw = new PrintWriter("Report.txt");
 
@@ -160,7 +160,7 @@ class Driver {
                  }
 
             pw.println();
-            pw.println("Scheduling order chart:| " + scheduler.getOrderChart());
+            pw.println("Scheduling order chart:| " + scheduler.getOrdChart());
             pw.println();
 
             int size = array.size();
