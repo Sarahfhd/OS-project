@@ -118,6 +118,75 @@ class Driver {
         Collections.sort(array, Comparator.comparingInt(a -> a.arrivalTime));
     }
 
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        List<PCB> Q1 = new ArrayList<>();
+        List<PCB> Q2 = new ArrayList<>();
+
+        Driver scheduler = new Driver(Q1, Q2);
+
+        int choice;
+
+        do {
+            System.out.println("Menu:");
+            System.out.println("1. Enter process details");
+            System.out.println("2. Execute scheduling algorithm");
+            System.out.println("3. Display process details and scheduling criteria");
+            System.out.println("4. Write process details and scheduling criteria to a file");
+            System.out.println("5. Exit the program");
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) {
+                case 1:
+                    enterProcessDetails(scanner, Q1, Q2);
+                    break;
+                case 2:
+                    scheduler.executeSchedulingAlgorithm();
+                    break;
+                case 3:
+                    Display() ;
+            }
+        }
+    }
+    private static void enterProcessDetails(Scanner scanner, List<PCB> Q1, List<PCB> Q2) {
+        System.out.print("Enter the number of processes: ");
+        int numProcesses = scanner.nextInt();
+        scanner.nextLine();
+
+        for (int i = 0; i < numProcesses; i++) {
+            System.out.println("Enter details for Process " + (i + 1) + ":");
+
+            System.out.print("Process ID: ");
+            String id = scanner.nextLine();
+
+            System.out.print("Arrival Time: ");
+            int arrivalTime = scanner.nextInt();
+            scanner.nextLine();
+
+            System.out.print("CPU Burst Time: ");
+            int cpuBurst = scanner.nextInt();
+            scanner.nextLine();
+
+            System.out.print("Priority (1 for Q1, 2 for Q2): ");
+            int priority = scanner.nextInt();
+            scanner.nextLine();
+
+            PCB process = new PCB(id, arrivalTime, cpuBurst, priority);
+
+            if (priority == 1) {
+                Q1.add(process);
+            } else if (priority == 2) {
+                Q2.add(process);
+            } else {
+                System.out.println("Invalid priority. Process not added.");
+            }
+        }
+
+        System.out.println("Process details entered successfully.");
+    }
+
 
     public static void Display() {
         System.out.println("Processes Details:");
