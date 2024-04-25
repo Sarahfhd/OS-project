@@ -1,7 +1,7 @@
 public class PCB{
 
     String ProcessID;
-	int priority, ArrivalTime, CPUBurst, StartTime, TerminationTime, TurnAroundTime, WaitingTime, ResponseTime;
+	int priority, ArrivalTime, CPUBurst, StartTime, TerminationTime, TurnAroundTime, WaitingTime, ResponseTime, exceutionTime;;
 	int finishedBurst=0;
 	boolean assigned=false;
 
@@ -10,6 +10,12 @@ public class PCB{
 		ArrivalTime = arrT;
 		CPUBurst = BT;
 		this.priority = priority;
+		this.WaitingTime = 0;
+        this.StartTime = 0;
+        this.TerminationTime = 0;
+        this.TurnAroundTime = 0;
+        this.ResponseTime = 0;
+        this.exceutionTime = 0;
 	}
 
     public void setArrivalT(int arrivalT) {
