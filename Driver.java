@@ -117,4 +117,72 @@ class Driver {
     private void sortByArrivalTime(List<PCB> array) {
         Collections.sort(array, Comparator.comparingInt(a -> a.arrivalTime));
     }
+
+
+    public static void print() {
+        System.out.println("Processes Details:");
+        System.out.println("*******************");
+        for (PCB process : array) {
+            System.out.println(process);
+            System.out.println("_________________________________________________________________________________________"); 
+            }
+
+        System.out.println();
+        System.out.println("Scheduling order chart: | " + scheduler.getOrderChart());
+        System.out.println();
+
+        int size = array.size();
+        double totalTurnAround = 0, totalWait = 0, totalResponse = 0;
+
+        for (PCB process : array) {
+            totalWait += process.waitingTime;
+            totalTurnAround += process.turnAroundTime;
+            totalResponse += process.responseTime;
+        }
+
+        System.out.println("Processes Scheduling Criteria:");
+        System.out.println("**************************************");
+        System.out.printf("Average Turnaround Time : %.3f \n", totalTurnAround / size);
+        System.out.printf("Average Waiting Time    : %.3f \n", totalWait / size);
+        System.out.printf("Average Response Time   : %.3f \n", totalResponse / size);
+        System.out.println();
+    }
+
+    public static void printFile() {
+        try {
+            PrintWriter pw = new PrintWriter("Report.txt");
+
+            pw.println("Processes Details:");
+            pw.println("*******************");
+            for (PCB process : array){
+                pw.println(process);
+                System.out.println("_________________________________________________________________________________________"); 
+                 }
+
+            pw.println();
+            pw.println("Scheduling order chart:| " + scheduler.getOrderChart());
+            pw.println();
+
+            int size = array.size();
+            double totalTurnAround = 0, totalWait = 0, totalResponse = 0;
+
+            for (PCB process : array) {
+                totalWait += process.waitingTime;
+                totalTurnAround += process.turnAroundTime;
+                totalResponse += process.responseTime;
+            }
+
+            pw.println("Processes Scheduling Criteria:");
+            pw.println("**************************************");
+            pw.printf("Average Turnaround Time : %.3f \n", totalTurnAround / size);
+            pw.printf("Average Waiting Time    : %.3f \n", totalWait / size);
+            pw.printf("Average Response Time   : %.3f \n", totalResponse / size);
+            pw.println();
+
+            pw.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 }
