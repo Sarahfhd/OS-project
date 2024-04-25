@@ -141,7 +141,7 @@ class Driver {
                     enterProcessDetails(scanner, Q1, Q2);
                     break;
                 case 2:
-                    scheduler.executeSchedulingAlgorithm();
+                    scheduler.executeSchedulingAlgorithms();
                     break;
                 case 3:
                     Display() ;
