@@ -1,39 +1,101 @@
-class PCB {
-    String processID;
-    int priority;
-    int arrivalTime;
-    int cpuBurstTime;
-    int startTime;
-    int terminationTime;
-    int turnaroundTime;
-    int waitingTime;
-    int responseTime;
+public class PCB{
+
+    String ProcessID;
+	int priority, ArrivalTime, CPUBurst, StartTime, TerminationTime, TurnAroundTime, WaitingTime, ResponseTime, exceutionTime;;
+	int finishedBurst=0;
+	boolean assigned=false;
+
+    public PCB(String pid, int arrT, int BT, int priority){
+		ProcessID = pid;
+		ArrivalTime = arrT;
+		CPUBurst = BT;
+		this.priority = priority;
+		this.WaitingTime = 0;
+        this.StartTime = 0;
+        this.TerminationTime = 0;
+        this.TurnAroundTime = 0;
+        this.ResponseTime = 0;
+        this.exceutionTime = 0;
+	}
+
+    public void setArrivalT(int arrivalT) {
+		this.ArrivalTime = arrivalT;
+	}
+    public void setPID(String PID) {
+		this.ProcessID = PID;
+	}
+
+	public void setBurstT(int burstT) {
+		CPUBurst = burstT;
+	}
+
+	public int getPriority() {
+		return priority;
+	}
 
 
-    public PCB(String processID, int priority, int arrivalTime, int cpuBurstTime) {
-        this.processID = processID;
-        this.priority = priority;
-        this.arrivalTime = arrivalTime;
-        this.cpuBurstTime = cpuBurstTime;
-        this.startTime = 0;
-        this.terminationTime = 0;
-        this.turnaroundTime = 0;
-        this.waitingTime = 0;
-        this.responseTime = 0;
-    }
+	public int getArrivalT() {
+		return ArrivalTime;
+	}
+
+	public int getBurstT() {
+		return CPUBurst;
+	}
+
+	public String getPID() {
+		return ProcessID;
+	}
+
+	public void setStartTime(int StartTime) {
+		this.StartTime = StartTime;
+	}
+
+	public void setTerminationTime(int TerminationTime) {
+		this.TerminationTime = TerminationTime;
+	}
+
+	public void setTurnAroundTime(int TurnAroundTime) {
+		this.TurnAroundTime = TurnAroundTime;
+	}
+
+    public void setWaitingTime(int WaitingTime) {
+		this.WaitingTime = WaitingTime;
+	}
+
+	public void setResponseTime(int ResponseTime) {
+		this.ResponseTime = ResponseTime;
+	}
+
+	public int getStartTime() {
+		return StartTime;
+	}
 
 
-    public void calculateTurnaroundTime() {
-        this.turnaroundTime = this.terminationTime - this.arrivalTime;
-    }
+	public int getTerminationTime() {
+		return TerminationTime;
+	}
+
+	public int getTurnAroundTime() {
+		return TurnAroundTime;
+	}
+
+	public int getWaitingTime() {
+		return WaitingTime;
+	}
+
+	public int getResponseTime() {
+		return ResponseTime;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("ProcessID: %s \nPriority: %d \nArrivalTime: %d \nCPUburst: %d \nStartTime: %d \nTerminationTime: %d \nTurnAroundTime: %d \nWaitingTime: %d \nResponseTime: %d\n", 
+				ProcessID, priority, ArrivalTime, CPUBurst, StartTime, TerminationTime, TurnAroundTime, WaitingTime, ResponseTime);
+	}
 
 
-    public void calculateWaitingTime() {
-        this.waitingTime = this.turnaroundTime - this.cpuBurstTime;
-    }
 
 
-    public void calculateResponseTime() {
-        this.responseTime = this.startTime - this.arrivalTime;
-    }
+
+
 }

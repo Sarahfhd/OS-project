@@ -2,14 +2,12 @@ import java.io.*;
 import java.util.*;
 
 class Driver {
-
+    
     private List<PCB> Q1;
     private List<PCB> Q2;
     private String ordChart = "";
 
-    int clTime = 0;
-    int quantum = 3;
-    int Counter = 0;
+    int clTime = 0; int quantum = 3;  int Counter = 0;
     
     public Driver(List<PCB> Q1, List<PCB> Q2) {
         this.Q1 = Q1;
@@ -19,7 +17,7 @@ class Driver {
         sortByArrivalTime(this.Q2);
     }
 
-    public void executeSchedulingAlgorithm() {
+    public void executeSchedulingAlgorithms() {
         PCB excutingProcess = null;
         List<PCB> rQ1 = new ArrayList<>();
         List<PCB> rQ2 = new ArrayList<>();
@@ -30,24 +28,24 @@ class Driver {
 
         for (PCB process : Q1) {
             process.exceutionTime = 0;
-            process.startTime = 0;
-            process.terminationTime = 0;
+            process.StartTime = 0;
+            process.TerminationTime = 0;
         }
 
         for (PCB process : Q2) {
             process.exceutionTime = 0;
-            process.startTime = 0;
-            process.terminationTime = 0;
+            process.StartTime = 0;
+            process.TerminationTime = 0;
         }
 
-        while (!Q1.isEmpty() || !Q2.isEmpty() || !rQ1.isEmpty() || !rQ2.isEmpty() || excProcess != null) {
+        while (!Q1.isEmpty() || !Q2.isEmpty() || !rQ1.isEmpty() || !rQ2.isEmpty() || excutingProcess != null) {
 
-            while (!Q1.isEmpty() && Q1.get(0).arrivalTime <= clTime) {
+            while (!Q1.isEmpty() && Q1.get(0).ArrivalTime <= clTime) {
                 PCB process = Q1.remove(0);
                 rQ1.add(process);
             }
 
-            while (!Q2.isEmpty() && Q2.get(0).arrivalTime <= clTime) {
+            while (!Q2.isEmpty() && Q2.get(0).ArrivalTime <= clTime) {
                 PCB process = Q2.remove(0);
                 rQ2.add(process);
                 sortByBurstTime(rQ2);
@@ -81,7 +79,7 @@ class Driver {
             if (excutingProcess != null) {
                 excutingProcess.exceutionTime++;
                 Counter++;
-                if (excutingProcess.exceutionTime == excutingProcess.cpuBurst) {
+                if (excutingProcess.exceutionTime == excutingProcess.CPUBurst) {
                     terminate(excutingProcess);
                     excutingProcess = null;
                 }
@@ -94,16 +92,16 @@ class Driver {
         ordChart += process.id + " | ";
 
         if (process.exceutionTime == 0)
-            process.startTime = clTime;
+            process.StartTime = clTime;
 
         return process;
     }
 
     private void terminate(PCB process) {
-        process.terminationTime = clTime;
-        process.waitingTime = process.terminationTime - process.arrivalTime - process.cpuBurst;
-        process.responseTime = process.startTime - process.arrivalTime;
-        process.turnAroundTime = process.terminationTime - process.arrivalTime;
+        process.TerminationTime = clTime;
+        process.WaitingTime = process.TerminationTime - process.ArrivalTime - process.CPUBurst;
+        process.ResponseTime = process.StartTime - process.ArrivalTime;
+        process.TurnAroundTime = process.TerminationTime - process.ArrivalTime;
     }
 
     public String getOrdChart() {
@@ -111,11 +109,11 @@ class Driver {
     }
 
     private void sortByBurstTime(List<PCB> array) {
-        Collections.sort(array, Comparator.comparingInt(a -> a.cpuBurst));
+        Collections.sort(array, Comparator.comparingInt(a -> a.CPUBurst));
     }
 
     private void sortByArrivalTime(List<PCB> array) {
-        Collections.sort(array, Comparator.comparingInt(a -> a.arrivalTime));
+        Collections.sort(array, Comparator.comparingInt(a -> a.ArrivalTime));
     }
 
     public static void main(String[] args) {
@@ -197,58 +195,58 @@ class Driver {
             }
 
         System.out.println();
-        System.out.println("Scheduling order chart: | " + scheduler.getOrdChart());
+        System.out.println("Scheduling order chart: | " + Driver.getOrdChart());
         System.out.println();
 
         int size = array.size();
-        double totalTurnAround = 0, totalWait = 0, totalResponse = 0;
+        double FinalTurnAround = 0, FinalWait = 0, FinalResponse = 0;
 
         for (PCB process : array) {
-            totalWait += process.waitingTime;
-            totalTurnAround += process.turnAroundTime;
-            totalResponse += process.responseTime;
+            FinalWait += process.WaitingTime;
+            FinalTurnAround += process.TurnAroundTime;
+            FinalResponse += process.ResponseTime;
         }
 
         System.out.println("Processes Scheduling Criteria:");
         System.out.println("**************************************");
-        System.out.printf("Average Turnaround Time : %.3f \n", totalTurnAround / size);
-        System.out.printf("Average Waiting Time    : %.3f \n", totalWait / size);
-        System.out.printf("Average Response Time   : %.3f \n", totalResponse / size);
+        System.out.printf("Average Turnaround Time : %.3f \n", FinalTurnAround / size);
+        System.out.printf("Average Waiting Time    : %.3f \n", FinalWait / size);
+        System.out.printf("Average Response Time   : %.3f \n", FinalResponse / size);
         System.out.println();
     }
 
     public static void WriteOnFile() {
         try {
-            PrintWriter pw = new PrintWriter("Report.txt");
+            PrintWriter rep = new PrintWriter("Report.txt");
 
-            pw.println("Processes Details:");
-            pw.println("*******************");
+            rep.println("Processes Details:");
+            rep.println("*******************");
             for (PCB process : array){
                 pw.println(process);
                 System.out.println(""); 
                  }
 
-            pw.println();
-            pw.println("Scheduling order chart:| " + scheduler.getOrdChart());
-            pw.println();
+            rep.println();
+            rep.println("Scheduling order chart:| " + Driver.getOrdChart());
+            rep.println();
 
             int size = array.size();
-            double totalTurnAround = 0, totalWait = 0, totalResponse = 0;
+            double FinalTurnAround = 0, FinalWait = 0, FinalResponse = 0;
 
             for (PCB process : array) {
-                totalWait += process.waitingTime;
-                totalTurnAround += process.turnAroundTime;
-                totalResponse += process.responseTime;
+                FinalWait += process.WaitingTime;
+                FinalTurnAround += process.TurnAroundTime;
+                FinalResponse += process.ResponseTime;
             }
 
-            pw.println("Processes Scheduling Criteria:");
-            pw.println("**************************************");
-            pw.printf("Average Turnaround Time : %.3f \n", totalTurnAround / size);
-            pw.printf("Average Waiting Time    : %.3f \n", totalWait / size);
-            pw.printf("Average Response Time   : %.3f \n", totalResponse / size);
-            pw.println();
+            rep.println("Processes Scheduling Criteria:");
+            rep.println("**************************************");
+            rep.printf("Average Turnaround Time : %.3f \n", FinalTurnAround / size);
+            rep.printf("Average Waiting Time    : %.3f \n", FinalWait / size);
+            rep.printf("Average Response Time   : %.3f \n", FinalResponse / size);
+            rep.println();
 
-            pw.close();
+            rep.close();
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
