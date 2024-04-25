@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-class Scheduler {
+class Driver {
 
     private List<PCB> Q1;
     private List<PCB> Q2;
