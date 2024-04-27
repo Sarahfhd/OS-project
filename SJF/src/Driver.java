@@ -26,7 +26,7 @@ class Driver {
             System.out.println("1. Enter process details");
             System.out.println("2. Execute scheduling algorithm and Generate a Report ");
             System.out.println("3. Exit the program");
-            System.out.print("Enter your choice: ");
+            System.out.println("Enter your choice: ");
             choice = scanner.nextInt();
             scanner.nextLine();
 
