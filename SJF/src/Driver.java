@@ -4,7 +4,7 @@ class Driver {
     
     private List<PCB> Q1;
     private List<PCB> Q2;
-    private static List<PCB> processes;
+    private static List<PCB> processes = new ArrayList() ;
     private static String ordChart = "";
 
     int clTime = 0; int quantum = 3;  int Counter = 0;
